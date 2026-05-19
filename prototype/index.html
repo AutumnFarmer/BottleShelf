@@ -1,0 +1,1061 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>瓶瓶罐罐 UI 原型</title>
+  <style>
+    :root {
+      --bg: #faf8f6;
+      --panel: #ffffff;
+      --ink: #2f2a28;
+      --muted: #7a706c;
+      --soft: #e8e1dd;
+      --primary: #b96f72;
+      --primary-soft: #f2ddd9;
+      --rose: #d9a7a0;
+      --warning: #c9824a;
+      --danger: #b85c5c;
+      --safe: #7a9b83;
+      --sage: #dce7dc;
+      --shadow: 0 18px 48px rgba(70, 47, 43, 0.12);
+      --radius: 8px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: #efe9e4;
+      color: var(--ink);
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "PingFang SC", "Helvetica Neue", Arial, sans-serif;
+    }
+
+    button,
+    input,
+    select {
+      font: inherit;
+    }
+
+    .workspace {
+      display: grid;
+      grid-template-columns: 280px minmax(0, 1fr);
+      min-height: 100vh;
+    }
+
+    .brief {
+      padding: 28px 24px;
+      border-right: 1px solid rgba(47, 42, 40, 0.08);
+      background: #fbfaf8;
+      position: sticky;
+      top: 0;
+      height: 100vh;
+    }
+
+    .brief h1 {
+      margin: 0 0 8px;
+      font-size: 28px;
+      line-height: 1.15;
+      letter-spacing: 0;
+    }
+
+    .brief p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.7;
+    }
+
+    .brief .section {
+      margin-top: 26px;
+    }
+
+    .brief h2 {
+      margin: 0 0 10px;
+      font-size: 14px;
+      color: var(--ink);
+    }
+
+    .brief ul {
+      padding-left: 18px;
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.8;
+    }
+
+    .canvas {
+      padding: 32px;
+      overflow: auto;
+    }
+
+    .screens {
+      display: grid;
+      grid-template-columns: repeat(6, 393px);
+      gap: 24px;
+      align-items: start;
+      min-width: max-content;
+    }
+
+    .screen-wrap {
+      display: grid;
+      gap: 10px;
+    }
+
+    .screen-title {
+      color: #584d49;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0;
+    }
+
+    .phone {
+      box-sizing: content-box;
+      width: 393px;
+      height: 852px;
+      overflow: hidden;
+      border-radius: 36px;
+      border: 10px solid #1d1b1a;
+      background: var(--bg);
+      box-shadow: var(--shadow);
+      position: relative;
+    }
+
+    .status {
+      height: 48px;
+      padding: 14px 22px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .content {
+      height: calc(100% - 48px - 76px);
+      overflow: hidden;
+      padding: 0 20px 18px;
+    }
+
+    .nav {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 76px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      border-top: 1px solid rgba(47, 42, 40, 0.08);
+      background: rgba(255, 255, 255, 0.86);
+      backdrop-filter: blur(18px);
+      padding: 8px 12px 14px;
+    }
+
+    .nav button {
+      border: 0;
+      background: transparent;
+      color: var(--muted);
+      display: grid;
+      gap: 4px;
+      justify-items: center;
+      align-content: center;
+      cursor: pointer;
+      min-width: 0;
+      font-size: 11px;
+    }
+
+    .nav button.active {
+      color: var(--primary);
+      font-weight: 700;
+    }
+
+    .icon {
+      width: 24px;
+      height: 24px;
+      border-radius: 8px;
+      display: grid;
+      place-items: center;
+      background: #f0e6e2;
+      color: currentColor;
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin: 2px 0 18px;
+    }
+
+    .title-block h2 {
+      margin: 0;
+      font-size: 26px;
+      line-height: 1.1;
+      letter-spacing: 0;
+    }
+
+    .title-block p {
+      margin: 7px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .circle-btn {
+      width: 40px;
+      height: 40px;
+      border: 0;
+      border-radius: 50%;
+      background: var(--ink);
+      color: #fff;
+      font-size: 24px;
+      line-height: 1;
+      cursor: pointer;
+    }
+
+    .card {
+      background: var(--panel);
+      border: 1px solid rgba(47, 42, 40, 0.06);
+      border-radius: var(--radius);
+      box-shadow: 0 10px 24px rgba(69, 43, 39, 0.06);
+    }
+
+    .hero-card {
+      padding: 16px;
+      display: grid;
+      grid-template-columns: 1fr 88px;
+      gap: 14px;
+      align-items: center;
+      background: linear-gradient(135deg, #fff 0%, #f7e9e5 100%);
+    }
+
+    .hero-card strong {
+      display: block;
+      font-size: 18px;
+      line-height: 1.25;
+      margin-bottom: 8px;
+    }
+
+    .hero-card span {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .bottle-art {
+      height: 104px;
+      position: relative;
+      border-radius: 8px;
+      background: #f7f1ee;
+      overflow: hidden;
+    }
+
+    .bottle-art::before,
+    .bottle-art::after {
+      content: "";
+      position: absolute;
+      bottom: 14px;
+      border-radius: 8px 8px 6px 6px;
+      box-shadow: inset 0 0 0 1px rgba(47, 42, 40, 0.08);
+    }
+
+    .bottle-art::before {
+      left: 18px;
+      width: 32px;
+      height: 68px;
+      background: #d9a7a0;
+    }
+
+    .bottle-art::after {
+      right: 16px;
+      width: 36px;
+      height: 86px;
+      background: #dce7dc;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      margin: 14px 0;
+    }
+
+    .stat {
+      padding: 10px 8px;
+      text-align: center;
+    }
+
+    .stat strong {
+      display: block;
+      font-size: 19px;
+      line-height: 1;
+      margin-bottom: 5px;
+    }
+
+    .stat span {
+      color: var(--muted);
+      font-size: 11px;
+      white-space: nowrap;
+    }
+
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 18px 0 10px;
+    }
+
+    .section-head h3 {
+      margin: 0;
+      font-size: 17px;
+    }
+
+    .section-head a {
+      color: var(--primary);
+      font-size: 13px;
+      text-decoration: none;
+    }
+
+    .product-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .product-row {
+      display: grid;
+      grid-template-columns: 56px 1fr auto;
+      gap: 12px;
+      padding: 10px;
+      align-items: center;
+      min-height: 78px;
+    }
+
+    .photo {
+      width: 56px;
+      height: 56px;
+      border-radius: 8px;
+      background: linear-gradient(145deg, #f0dad5, #f6f1e8);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .photo.green {
+      background: linear-gradient(145deg, #dce7dc, #f7f8f4);
+    }
+
+    .photo.amber {
+      background: linear-gradient(145deg, #edd4ba, #fff7ec);
+    }
+
+    .photo::after {
+      content: "";
+      position: absolute;
+      left: 20px;
+      bottom: 9px;
+      width: 18px;
+      height: 34px;
+      border-radius: 6px 6px 4px 4px;
+      background: rgba(255,255,255,0.64);
+      border: 1px solid rgba(47, 42, 40, 0.08);
+    }
+
+    .product-row h4 {
+      margin: 0 0 5px;
+      font-size: 14px;
+      line-height: 1.25;
+    }
+
+    .product-row p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.35;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 54px;
+      height: 26px;
+      padding: 0 8px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+      white-space: nowrap;
+      background: var(--sage);
+      color: #48634f;
+    }
+
+    .tag.warning {
+      background: #f3e1cc;
+      color: var(--warning);
+    }
+
+    .tag.danger {
+      background: #f4dcda;
+      color: var(--danger);
+    }
+
+    .search {
+      height: 42px;
+      border-radius: 999px;
+      background: #fff;
+      border: 1px solid rgba(47, 42, 40, 0.08);
+      display: flex;
+      align-items: center;
+      padding: 0 14px;
+      gap: 8px;
+      color: var(--muted);
+      font-size: 14px;
+      margin-bottom: 12px;
+    }
+
+    .chips {
+      display: flex;
+      gap: 8px;
+      overflow: hidden;
+      margin-bottom: 12px;
+    }
+
+    .chip {
+      border: 1px solid rgba(47, 42, 40, 0.08);
+      background: #fff;
+      border-radius: 999px;
+      height: 34px;
+      padding: 0 13px;
+      color: var(--muted);
+      font-size: 13px;
+      white-space: nowrap;
+    }
+
+    .chip.active {
+      border-color: transparent;
+      background: var(--ink);
+      color: #fff;
+    }
+
+    .detail-photo {
+      height: 184px;
+      margin-bottom: 14px;
+      border-radius: 18px;
+      background: linear-gradient(145deg, #f1d7d1, #fff8ee);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .detail-photo::before {
+      content: "";
+      width: 88px;
+      height: 132px;
+      border-radius: 18px 18px 10px 10px;
+      background: rgba(255, 255, 255, 0.72);
+      position: absolute;
+      left: 132px;
+      bottom: 22px;
+      border: 1px solid rgba(47,42,40,0.08);
+      box-shadow: 0 18px 32px rgba(119, 74, 69, 0.12);
+    }
+
+    .detail-photo::after {
+      content: "SERUM";
+      position: absolute;
+      left: 146px;
+      bottom: 74px;
+      color: #9b6664;
+      font-size: 12px;
+      letter-spacing: 0;
+      font-weight: 800;
+    }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .info {
+      padding: 12px;
+    }
+
+    .info span {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .info strong {
+      display: block;
+      margin-top: 5px;
+      font-size: 15px;
+    }
+
+    .actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .primary-btn,
+    .ghost-btn {
+      height: 44px;
+      border-radius: 999px;
+      border: 0;
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 14px;
+    }
+
+    .primary-btn {
+      background: var(--primary);
+      color: #fff;
+    }
+
+    .ghost-btn {
+      background: #fff;
+      color: var(--ink);
+      border: 1px solid rgba(47,42,40,0.08);
+    }
+
+    .step {
+      display: grid;
+      gap: 12px;
+    }
+
+    .field {
+      background: #fff;
+      border: 1px solid rgba(47,42,40,0.08);
+      border-radius: var(--radius);
+      padding: 12px;
+    }
+
+    .field label {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+      margin-bottom: 7px;
+    }
+
+    .field input,
+    .field select {
+      width: 100%;
+      border: 0;
+      outline: 0;
+      color: var(--ink);
+      background: transparent;
+      font-size: 15px;
+      min-height: 24px;
+    }
+
+    .method-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 9px;
+      margin-bottom: 14px;
+    }
+
+    .method {
+      padding: 14px 8px;
+      text-align: center;
+      font-size: 13px;
+      color: var(--ink);
+    }
+
+    .scene-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .scene-card {
+      padding: 14px;
+      min-height: 128px;
+    }
+
+    .scene-card h4 {
+      margin: 0 0 7px;
+      font-size: 15px;
+    }
+
+    .scene-card p {
+      margin: 0 0 14px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .stack {
+      display: flex;
+      margin-left: 4px;
+    }
+
+    .stack .mini {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--primary-soft);
+      border: 2px solid #fff;
+      margin-left: -4px;
+    }
+
+    .stack .mini:nth-child(2) { background: var(--sage); }
+    .stack .mini:nth-child(3) { background: #f3e1cc; }
+
+    .paywall {
+      height: calc(100% - 48px - 76px);
+      display: grid;
+      align-content: space-between;
+      padding-bottom: 4px;
+    }
+
+    .pay-hero {
+      padding: 22px;
+      background: linear-gradient(145deg, #fff, #f4dfdb);
+    }
+
+    .pay-hero h2 {
+      margin: 0 0 10px;
+      font-size: 26px;
+      line-height: 1.14;
+    }
+
+    .pay-hero p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.55;
+      font-size: 14px;
+    }
+
+    .feature-list {
+      display: grid;
+      gap: 10px;
+      margin: 16px 0;
+    }
+
+    .feature {
+      display: grid;
+      grid-template-columns: 24px 1fr;
+      gap: 10px;
+      align-items: start;
+      padding: 12px;
+    }
+
+    .feature strong {
+      display: block;
+      font-size: 14px;
+      margin-bottom: 3px;
+    }
+
+    .feature span {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.4;
+    }
+
+    .price {
+      padding: 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+      border: 2px solid var(--primary);
+    }
+
+    .price strong {
+      font-size: 17px;
+    }
+
+    .price span {
+      color: var(--primary);
+      font-weight: 800;
+      font-size: 20px;
+    }
+
+    @media (max-width: 900px) {
+      .workspace {
+        grid-template-columns: 1fr;
+      }
+
+      .brief {
+        position: static;
+        height: auto;
+        border-right: 0;
+        border-bottom: 1px solid rgba(47, 42, 40, 0.08);
+      }
+
+      .canvas {
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="workspace">
+    <aside class="brief">
+      <h1>瓶瓶罐罐</h1>
+      <p>化妆品保质期与库存提醒。这个原型用于讨论 MVP 信息架构、付费点和女性向视觉气质。</p>
+
+      <div class="section">
+        <h2>设计原则</h2>
+        <ul>
+          <li>打开 3 秒内看懂哪些东西要处理。</li>
+          <li>提醒温和但明确，不制造焦虑。</li>
+          <li>添加流程短，其他字段后置。</li>
+          <li>不做社区、成分评分和皮肤诊断。</li>
+        </ul>
+      </div>
+
+      <div class="section">
+        <h2>MVP 页面</h2>
+        <ul>
+          <li>今天：临期、优先使用、数据概览。</li>
+          <li>库存：搜索、分类、状态筛选。</li>
+          <li>详情：单品生命周期和快捷动作。</li>
+          <li>添加：拍照、扫码、手动录入。</li>
+          <li>梳妆台：按场景/位置管理。</li>
+          <li>会员：免费限制和 Pro 价值。</li>
+        </ul>
+      </div>
+    </aside>
+
+    <section class="canvas">
+      <div class="screens">
+        <section class="screen-wrap">
+          <div class="screen-title">01 今天</div>
+          <div class="phone">
+            <div class="status"><span>9:41</span><span>5G 100%</span></div>
+            <div class="content">
+              <header class="topbar">
+                <div class="title-block">
+                  <h2>今天</h2>
+                  <p>有 3 件需要留意</p>
+                </div>
+                <button class="circle-btn" aria-label="添加">+</button>
+              </header>
+
+              <div class="card hero-card">
+                <div>
+                  <strong>先用这瓶精华</strong>
+                  <span>开封 5 个月，距离建议使用期还有 12 天。</span>
+                </div>
+                <div class="bottle-art" aria-hidden="true"></div>
+              </div>
+
+              <div class="stats">
+                <div class="card stat"><strong>42</strong><span>库存</span></div>
+                <div class="card stat"><strong>3</strong><span>临期</span></div>
+                <div class="card stat"><strong>1</strong><span>过期</span></div>
+                <div class="card stat"><strong>8</strong><span>空瓶</span></div>
+              </div>
+
+              <div class="section-head">
+                <h3>今日优先使用</h3>
+                <a href="#">全部</a>
+              </div>
+              <div class="product-list">
+                <article class="card product-row">
+                  <div class="photo"></div>
+                  <div>
+                    <h4>维 C 亮肤精华</h4>
+                    <p>Glow Lab · 梳妆台 · 已开封</p>
+                  </div>
+                  <span class="tag warning">12 天</span>
+                </article>
+                <article class="card product-row">
+                  <div class="photo green"></div>
+                  <div>
+                    <h4>清爽防晒乳</h4>
+                    <p>Sunbay · 通勤包 · 使用中</p>
+                  </div>
+                  <span class="tag">46 天</span>
+                </article>
+                <article class="card product-row">
+                  <div class="photo amber"></div>
+                  <div>
+                    <h4>玫瑰香水小样</h4>
+                    <p>香水 · 旅行包 · 小样</p>
+                  </div>
+                  <span class="tag danger">过期</span>
+                </article>
+              </div>
+            </div>
+            <nav class="nav">
+              <button class="active"><span class="icon">今</span><span>今天</span></button>
+              <button><span class="icon">库</span><span>库存</span></button>
+              <button><span class="icon">妆</span><span>梳妆台</span></button>
+              <button><span class="icon">我</span><span>我的</span></button>
+            </nav>
+          </div>
+        </section>
+
+        <section class="screen-wrap">
+          <div class="screen-title">02 库存</div>
+          <div class="phone">
+            <div class="status"><span>9:41</span><span>5G 100%</span></div>
+            <div class="content">
+              <header class="topbar">
+                <div class="title-block">
+                  <h2>库存</h2>
+                  <p>按临期优先排序</p>
+                </div>
+                <button class="circle-btn" aria-label="添加">+</button>
+              </header>
+              <div class="search">搜索产品、品牌、位置</div>
+              <div class="chips">
+                <button class="chip active">全部</button>
+                <button class="chip">护肤</button>
+                <button class="chip">彩妆</button>
+                <button class="chip">香水</button>
+                <button class="chip">小样</button>
+              </div>
+              <div class="chips">
+                <button class="chip active">临期优先</button>
+                <button class="chip">使用中</button>
+                <button class="chip">未开封</button>
+              </div>
+              <div class="product-list">
+                <article class="card product-row">
+                  <div class="photo"></div>
+                  <div>
+                    <h4>维 C 亮肤精华</h4>
+                    <p>2026.01.18 开封 · 梳妆台</p>
+                  </div>
+                  <span class="tag warning">12 天</span>
+                </article>
+                <article class="card product-row">
+                  <div class="photo amber"></div>
+                  <div>
+                    <h4>玫瑰香水小样</h4>
+                    <p>2025.08.02 开封 · 旅行包</p>
+                  </div>
+                  <span class="tag danger">过期</span>
+                </article>
+                <article class="card product-row">
+                  <div class="photo green"></div>
+                  <div>
+                    <h4>清爽防晒乳</h4>
+                    <p>2026.03.12 开封 · 通勤包</p>
+                  </div>
+                  <span class="tag">46 天</span>
+                </article>
+                <article class="card product-row">
+                  <div class="photo"></div>
+                  <div>
+                    <h4>丝绒唇釉 08</h4>
+                    <p>未开封 · 彩妆抽屉</p>
+                  </div>
+                  <span class="tag">未开封</span>
+                </article>
+              </div>
+            </div>
+            <nav class="nav">
+              <button><span class="icon">今</span><span>今天</span></button>
+              <button class="active"><span class="icon">库</span><span>库存</span></button>
+              <button><span class="icon">妆</span><span>梳妆台</span></button>
+              <button><span class="icon">我</span><span>我的</span></button>
+            </nav>
+          </div>
+        </section>
+
+        <section class="screen-wrap">
+          <div class="screen-title">03 产品详情</div>
+          <div class="phone">
+            <div class="status"><span>9:41</span><span>5G 100%</span></div>
+            <div class="content">
+              <header class="topbar">
+                <div class="title-block">
+                  <h2>维 C 亮肤精华</h2>
+                  <p>Glow Lab · 精华 · 使用中</p>
+                </div>
+                <span class="tag warning">12 天</span>
+              </header>
+              <div class="detail-photo" aria-hidden="true"></div>
+              <div class="info-grid">
+                <div class="card info"><span>购买日期</span><strong>2025.12.28</strong></div>
+                <div class="card info"><span>开封日期</span><strong>2026.01.18</strong></div>
+                <div class="card info"><span>建议到期</span><strong>2026.06.18</strong></div>
+                <div class="card info"><span>存放位置</span><strong>梳妆台</strong></div>
+              </div>
+              <div class="actions">
+                <button class="primary-btn">标记空瓶</button>
+                <button class="ghost-btn">延后提醒</button>
+              </div>
+              <div class="section-head">
+                <h3>使用备注</h3>
+                <a href="#">编辑</a>
+              </div>
+              <div class="card field">
+                <label>回购倾向</label>
+                <input value="质地清爽，早 C 晚 A 时早上使用。" readonly>
+              </div>
+            </div>
+            <nav class="nav">
+              <button class="active"><span class="icon">今</span><span>今天</span></button>
+              <button><span class="icon">库</span><span>库存</span></button>
+              <button><span class="icon">妆</span><span>梳妆台</span></button>
+              <button><span class="icon">我</span><span>我的</span></button>
+            </nav>
+          </div>
+        </section>
+
+        <section class="screen-wrap">
+          <div class="screen-title">04 添加产品</div>
+          <div class="phone">
+            <div class="status"><span>9:41</span><span>5G 100%</span></div>
+            <div class="content">
+              <header class="topbar">
+                <div class="title-block">
+                  <h2>添加产品</h2>
+                  <p>先填必要信息，其他以后补</p>
+                </div>
+              </header>
+              <div class="method-grid">
+                <div class="card method">拍照</div>
+                <div class="card method">扫码</div>
+                <div class="card method">手动</div>
+              </div>
+              <div class="step">
+                <div class="field">
+                  <label>产品名</label>
+                  <input value="维 C 亮肤精华">
+                </div>
+                <div class="field">
+                  <label>品牌</label>
+                  <input value="Glow Lab">
+                </div>
+                <div class="field">
+                  <label>分类</label>
+                  <select>
+                    <option>精华</option>
+                    <option>防晒</option>
+                    <option>香水</option>
+                  </select>
+                </div>
+                <div class="field">
+                  <label>开封状态</label>
+                  <select>
+                    <option>已经开封</option>
+                    <option>还未开封</option>
+                  </select>
+                </div>
+                <div class="field">
+                  <label>开封日期</label>
+                  <input value="2026.01.18">
+                </div>
+                <div class="field">
+                  <label>开封后使用期</label>
+                  <select>
+                    <option>6 个月</option>
+                    <option>12 个月</option>
+                    <option>24 个月</option>
+                  </select>
+                </div>
+                <button class="primary-btn">保存并设置提醒</button>
+              </div>
+            </div>
+            <nav class="nav">
+              <button><span class="icon">今</span><span>今天</span></button>
+              <button class="active"><span class="icon">库</span><span>库存</span></button>
+              <button><span class="icon">妆</span><span>梳妆台</span></button>
+              <button><span class="icon">我</span><span>我的</span></button>
+            </nav>
+          </div>
+        </section>
+
+        <section class="screen-wrap">
+          <div class="screen-title">05 梳妆台</div>
+          <div class="phone">
+            <div class="status"><span>9:41</span><span>5G 100%</span></div>
+            <div class="content">
+              <header class="topbar">
+                <div class="title-block">
+                  <h2>梳妆台</h2>
+                  <p>按真实使用场景整理</p>
+                </div>
+                <button class="circle-btn" aria-label="添加">+</button>
+              </header>
+              <div class="scene-grid">
+                <article class="card scene-card">
+                  <h4>早间护肤</h4>
+                  <p>6 件 · 1 件临期</p>
+                  <div class="stack"><span class="mini"></span><span class="mini"></span><span class="mini"></span></div>
+                </article>
+                <article class="card scene-card">
+                  <h4>晚间护肤</h4>
+                  <p>8 件 · 2 件临期</p>
+                  <div class="stack"><span class="mini"></span><span class="mini"></span><span class="mini"></span></div>
+                </article>
+                <article class="card scene-card">
+                  <h4>通勤妆包</h4>
+                  <p>5 件 · 状态正常</p>
+                  <div class="stack"><span class="mini"></span><span class="mini"></span><span class="mini"></span></div>
+                </article>
+                <article class="card scene-card">
+                  <h4>旅行包</h4>
+                  <p>12 件 · 1 件过期</p>
+                  <div class="stack"><span class="mini"></span><span class="mini"></span><span class="mini"></span></div>
+                </article>
+                <article class="card scene-card">
+                  <h4>未开封囤货</h4>
+                  <p>11 件 · 价值 ¥2,180</p>
+                  <div class="stack"><span class="mini"></span><span class="mini"></span><span class="mini"></span></div>
+                </article>
+                <article class="card scene-card">
+                  <h4>浴室柜</h4>
+                  <p>7 件 · 3 件使用中</p>
+                  <div class="stack"><span class="mini"></span><span class="mini"></span><span class="mini"></span></div>
+                </article>
+              </div>
+            </div>
+            <nav class="nav">
+              <button><span class="icon">今</span><span>今天</span></button>
+              <button><span class="icon">库</span><span>库存</span></button>
+              <button class="active"><span class="icon">妆</span><span>梳妆台</span></button>
+              <button><span class="icon">我</span><span>我的</span></button>
+            </nav>
+          </div>
+        </section>
+
+        <section class="screen-wrap">
+          <div class="screen-title">06 会员</div>
+          <div class="phone">
+            <div class="status"><span>9:41</span><span>5G 100%</span></div>
+            <div class="content paywall">
+              <div>
+                <header class="topbar">
+                  <div class="title-block">
+                    <h2>Pro</h2>
+                    <p>免费版最多管理 10 件产品</p>
+                  </div>
+                </header>
+                <section class="card pay-hero">
+                  <h2>少浪费一瓶精华，就值回来了</h2>
+                  <p>解锁无限产品、高级提醒、空瓶统计和库存价值记录。</p>
+                </section>
+                <div class="feature-list">
+                  <div class="card feature"><span class="tag">1</span><div><strong>无限产品</strong><span>囤货、小样、旅行装都能记录。</span></div></div>
+                  <div class="card feature"><span class="tag">2</span><div><strong>高级提醒</strong><span>支持 7/15/30/60 天和自定义提醒。</span></div></div>
+                  <div class="card feature"><span class="tag">3</span><div><strong>空瓶与浪费统计</strong><span>看清买了什么、用完什么、浪费多少。</span></div></div>
+                </div>
+              </div>
+              <div>
+                <div class="card price"><strong>终身 Pro</strong><span>¥28</span></div>
+                <button class="primary-btn" style="width:100%">解锁 Pro</button>
+              </div>
+            </div>
+            <nav class="nav">
+              <button><span class="icon">今</span><span>今天</span></button>
+              <button><span class="icon">库</span><span>库存</span></button>
+              <button><span class="icon">妆</span><span>梳妆台</span></button>
+              <button class="active"><span class="icon">我</span><span>我的</span></button>
+            </nav>
+          </div>
+        </section>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
