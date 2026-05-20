@@ -15,7 +15,7 @@ enum ProductStatus: String, Codable, CaseIterable, Identifiable {
         case .unopened: "未开封"
         case .inUse: "使用中"
         case .expiringSoon: "临期"
-        case .expired: "已过期"
+        case .expired: "超过建议期"
         case .emptied: "已空瓶"
         case .discarded: "已丢弃"
         }

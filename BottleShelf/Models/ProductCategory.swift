@@ -34,4 +34,22 @@ enum ProductCategory: String, Codable, CaseIterable, Identifiable {
         case .other: "其他"
         }
     }
+
+    var symbolName: String {
+        switch self {
+        case .cleanser: "drop.fill"
+        case .toner: "humidity.fill"
+        case .serum: "sparkles"
+        case .cream: "leaf.fill"
+        case .sunscreen: "sun.max.fill"
+        case .mask: "square.grid.2x2.fill"
+        case .baseMakeup: "paintpalette.fill"
+        case .lip: "heart.fill"
+        case .eyeMakeup: "eye.fill"
+        case .perfume: "wand.and.stars"
+        case .sample: "shippingbox.fill"
+        case .tool: "wrench.and.screwdriver.fill"
+        case .other: "tray.fill"
+        }
+    }
 }

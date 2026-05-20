@@ -132,7 +132,7 @@ struct ProductDetailView: View {
     private var statusText: String {
         if let days = ExpiryCalculator.daysUntilExpiry(for: product) {
             if days < 0 {
-                return "已过期 \(abs(days)) 天"
+                return "超过建议期 \(abs(days)) 天"
             }
             if days <= ExpiryCalculator.expiringSoonDays {
                 return "还剩 \(days) 天"

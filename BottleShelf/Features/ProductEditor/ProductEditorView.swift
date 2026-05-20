@@ -24,6 +24,7 @@ struct ProductEditorView: View {
     @State private var note: String
     @State private var selectedPhotoItem: PhotosPickerItem?
     @State private var selectedImageData: Data?
+    @State private var showingAdvancedInfo: Bool
 
     init(product: BeautyProduct? = nil) {
         self.product = product
@@ -43,12 +44,13 @@ struct ProductEditorView: View {
         _note = State(initialValue: product?.note ?? "")
         _selectedPhotoItem = State(initialValue: nil)
         _selectedImageData = State(initialValue: nil)
+        _showingAdvancedInfo = State(initialValue: product != nil)
     }
 
     var body: some View {
         NavigationStack {
             Form {
-                Section("产品照片") {
+                Section("先填这些") {
                     HStack(spacing: 14) {
                         editorImagePreview
 
@@ -64,9 +66,7 @@ struct ProductEditorView: View {
                         }
                     }
                     .padding(.vertical, 4)
-                }
 
-                Section("基础信息") {
                     TextField("产品名", text: $name)
                     TextField("品牌（选填）", text: $brand)
 
@@ -86,34 +86,40 @@ struct ProductEditorView: View {
                     }
                 }
 
-                Section("日期与保质期") {
+                Section("开封和建议期") {
                     Toggle("已经开封", isOn: $isOpened)
+
+                    if isOpened {
+                        Text("大概什么时候开的？")
+                            .font(.footnote.weight(.medium))
+                            .foregroundStyle(AppTheme.ink)
+
+                        estimatedDateButtons
+
+                        Toggle("手动调整开封日期", isOn: $hasOpenedDate)
+                        if hasOpenedDate {
+                            DatePicker("开封日期", selection: $openedDate, displayedComponents: .date)
+                            Toggle("这是估算日期", isOn: $isEstimatedOpenedDate)
+                        }
+                    }
 
                     Toggle("填写购买日期", isOn: $hasPurchaseDate)
                     if hasPurchaseDate {
                         DatePicker("购买日期", selection: $purchaseDate, displayedComponents: .date)
                     }
-
-                    if isOpened {
-                        Toggle("填写开封日期", isOn: $hasOpenedDate)
-                        if hasOpenedDate {
-                            DatePicker("开封日期", selection: $openedDate, displayedComponents: .date)
-                            Toggle("这是估算日期", isOn: $isEstimatedOpenedDate)
-                        } else {
-                            estimatedDateButtons
-                        }
-
-                        Stepper("开封后使用期：\(openedShelfLifeMonths) 个月", value: $openedShelfLifeMonths, in: 1...48)
-                    }
-
-                    Stepper("未开封保质期：\(unopenedShelfLifeMonths) 个月", value: $unopenedShelfLifeMonths, in: 1...60)
                 }
 
-                Section("更多信息") {
-                    TextField("价格（选填）", text: $priceText)
-                        .keyboardType(.decimalPad)
-                    TextField("备注（选填）", text: $note, axis: .vertical)
-                        .lineLimit(3...6)
+                Section {
+                    DisclosureGroup("高级信息", isExpanded: $showingAdvancedInfo) {
+                        if isOpened {
+                            Stepper("开封后使用期：\(openedShelfLifeMonths) 个月", value: $openedShelfLifeMonths, in: 1...48)
+                        }
+                        Stepper("未开封保质期：\(unopenedShelfLifeMonths) 个月", value: $unopenedShelfLifeMonths, in: 1...60)
+                        TextField("价格（选填）", text: $priceText)
+                            .keyboardType(.decimalPad)
+                        TextField("备注（选填）", text: $note, axis: .vertical)
+                            .lineLimit(3...6)
+                    }
                 }
 
                 Section {
@@ -146,11 +152,12 @@ struct ProductEditorView: View {
 
     private var estimatedDateButtons: some View {
         VStack(alignment: .leading, spacing: 8) {
-            Text("不记得准确日期时，可以先选一个大概时间。")
+            Text("不记得准确日期时，先选一个大概时间，后面可以再改。")
                 .font(.footnote)
                 .foregroundStyle(AppTheme.muted)
 
-            HStack {
+            LazyVGrid(columns: [GridItem(.adaptive(minimum: 82), spacing: 8)], spacing: 8) {
+                estimateButton("刚打开", months: 0)
                 estimateButton("1个月前", months: -1)
                 estimateButton("3个月前", months: -3)
                 estimateButton("半年前", months: -6)
@@ -181,7 +188,7 @@ struct ProductEditorView: View {
         Button(title) {
             openedDate = Calendar.current.date(byAdding: .month, value: months, to: Date()) ?? Date()
             hasOpenedDate = true
-            isEstimatedOpenedDate = true
+            isEstimatedOpenedDate = months != 0
         }
         .buttonStyle(.bordered)
     }

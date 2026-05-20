@@ -15,14 +15,9 @@ struct ProductThumbnail: View {
                 RoundedRectangle(cornerRadius: 8, style: .continuous)
                     .fill(background)
                     .overlay {
-                        VStack(spacing: 0) {
-                            Capsule()
-                                .fill(Color.white.opacity(0.7))
-                                .frame(width: size * 0.18, height: size * 0.12)
-                            RoundedRectangle(cornerRadius: 5, style: .continuous)
-                                .fill(Color.white.opacity(0.68))
-                                .frame(width: size * 0.32, height: size * 0.48)
-                        }
+                        Image(systemName: category.symbolName)
+                            .font(.system(size: size * 0.36, weight: .semibold))
+                            .foregroundStyle(iconColor)
                     }
             }
         }
@@ -38,6 +33,19 @@ struct ProductThumbnail: View {
             LinearGradient(colors: [AppTheme.warning.opacity(0.24), Color.white], startPoint: .topLeading, endPoint: .bottomTrailing)
         default:
             LinearGradient(colors: [AppTheme.primarySoft, Color.white], startPoint: .topLeading, endPoint: .bottomTrailing)
+        }
+    }
+
+    private var iconColor: Color {
+        switch category {
+        case .sunscreen, .tool:
+            AppTheme.sage
+        case .perfume, .sample:
+            AppTheme.warning
+        case .baseMakeup, .lip, .eyeMakeup:
+            AppTheme.primary
+        default:
+            AppTheme.ink.opacity(0.72)
         }
     }
 }

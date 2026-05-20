@@ -30,9 +30,9 @@ struct TodayView: View {
             ScrollView {
                 VStack(alignment: .leading, spacing: 18) {
                     heroCard
-                    reminderPermissionCard
                     summaryGrid
                     prioritySection
+                    reminderPermissionCard
                 }
                 .padding(20)
             }
@@ -99,10 +99,10 @@ struct TodayView: View {
     }
 
     private var summaryGrid: some View {
-        LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 8), count: 4), spacing: 8) {
+        LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 10), count: 2), spacing: 10) {
             SummaryStatCard(value: "\(activeProducts.count)", label: "库存")
-            SummaryStatCard(value: "\(count(for: .expiringSoon))", label: "临期")
-            SummaryStatCard(value: "\(count(for: .expired))", label: "过期")
+            SummaryStatCard(value: "\(count(for: .expiringSoon))", label: "临近建议期")
+            SummaryStatCard(value: "\(count(for: .expired))", label: "超过建议期")
             SummaryStatCard(value: "\(count(for: .emptied))", label: "空瓶")
         }
     }
@@ -141,7 +141,7 @@ struct TodayView: View {
     private var prioritySection: some View {
         VStack(alignment: .leading, spacing: 12) {
             HStack {
-                Text("今日优先使用")
+                Text("今天先用哪件")
                     .font(.headline)
                     .foregroundStyle(AppTheme.ink)
 
@@ -150,8 +150,8 @@ struct TodayView: View {
 
             if priorityProducts.isEmpty {
                 EmptyStateView(
-                    title: "先添加 3 件正在用的产品",
-                    message: "添加后这里会自动展示快过期和需要优先使用的产品。",
+                    title: "先添加第一件正在用的产品",
+                    message: "添加后这里会自动展示临近建议期、适合优先使用的产品。",
                     buttonTitle: "添加第一件"
                 ) {
                     startAddFlow()
@@ -173,13 +173,13 @@ struct TodayView: View {
 
     private var heroTitle: String {
         guard let first = priorityProducts.first else {
-            return "把瓶瓶罐罐管起来"
+            return "从正在用的产品开始"
         }
         switch ExpiryCalculator.status(for: first) {
         case .expired:
-            return "\(first.name) 已超过建议使用期"
+            return "今天先处理 1 件超过建议期的产品"
         case .expiringSoon:
-            return "先用这件：\(first.name)"
+            return "今天先用 1 件临近建议期的产品"
         default:
             return "今天状态稳定"
         }
@@ -187,15 +187,18 @@ struct TodayView: View {
 
     private var heroMessage: String {
         guard let first = priorityProducts.first else {
-            return "记录开封时间、到期日期和存放位置，减少重复购买和过期浪费。"
+            return "记录开封时间、建议到期日和存放位置，先把梳妆台里最常用的几件管起来。"
         }
         if let days = ExpiryCalculator.daysUntilExpiry(for: first) {
             if days < 0 {
-                return "根据你填写的日期，它已超过建议使用期 \(abs(days)) 天。"
+                return "\(first.name) 已超过建议期 \(abs(days)) 天，可以先确认状态，再决定继续使用、空瓶或处理。"
             }
-            return "根据你填写的日期，距离建议到期还有 \(days) 天。"
+            if days == 0 {
+                return "\(first.name) 今天到建议期，可以放到今天优先使用。"
+            }
+            return "\(first.name) 距离建议期还有 \(days) 天，可以优先安排使用。"
         }
-        return "还没有设置到期日期，可以进入详情补充。"
+        return "\(first.name) 还没有建议期，可以进入详情补充日期。"
     }
 
     private func count(for status: ProductStatus) -> Int {
