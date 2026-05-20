@@ -3,7 +3,8 @@ enum ProductLimit {
 
     static func activeCount(in products: [BeautyProduct]) -> Int {
         products.filter { product in
-            ExpiryCalculator.status(for: product) != .discarded
+            let status = ExpiryCalculator.status(for: product)
+            return status != .emptied && status != .discarded
         }.count
     }
 

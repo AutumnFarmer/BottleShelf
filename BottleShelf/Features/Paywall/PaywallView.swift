@@ -2,17 +2,18 @@ import SwiftUI
 
 struct PaywallView: View {
     @Environment(\.dismiss) private var dismiss
+    @EnvironmentObject private var purchaseManager: PurchaseManager
 
     var body: some View {
         NavigationStack {
             VStack(alignment: .leading, spacing: 18) {
                 VStack(alignment: .leading, spacing: 10) {
-                    Text("少浪费一瓶精华，就值回来了")
+                    Text(purchaseManager.isPro ? "Pro 已解锁" : "继续记录你的瓶瓶罐罐")
                         .font(.largeTitle.weight(.bold))
                         .foregroundStyle(AppTheme.ink)
                         .fixedSize(horizontal: false, vertical: true)
 
-                    Text("解锁无限产品、高级提醒、空瓶统计和库存价值记录。")
+                    Text(purchaseManager.isPro ? "你已经可以记录无限产品，本地提醒和照片仍然只保存在这台设备上。" : "免费版最多记录 10 件。解锁后可以继续记录护肤品、彩妆、小样和香水。")
                         .font(.subheadline)
                         .foregroundStyle(AppTheme.muted)
                 }
@@ -23,8 +24,8 @@ struct PaywallView: View {
 
                 VStack(spacing: 10) {
                     FeatureLine(icon: "infinity", title: "无限产品", message: "囤货、小样、旅行装都能记录。")
-                    FeatureLine(icon: "bell.badge", title: "高级提醒", message: "支持 7/15/30/60 天和自定义提醒。")
-                    FeatureLine(icon: "chart.bar", title: "空瓶与浪费统计", message: "看清买了什么、用完什么、浪费多少。")
+                    FeatureLine(icon: "bell.badge", title: "本地到期提醒", message: "按到期前 30 天、7 天、当天和到期后 7 天提醒。")
+                    FeatureLine(icon: "lock.shield", title: "本地优先", message: "产品照片和记录默认不上传服务器。")
                 }
 
                 Spacer()
@@ -34,7 +35,7 @@ struct PaywallView: View {
                         Text("终身 Pro")
                             .font(.headline)
                         Spacer()
-                        Text("¥28")
+                        Text(purchaseManager.displayPrice)
                             .font(.title3.weight(.bold))
                             .foregroundStyle(AppTheme.primary)
                     }
@@ -42,23 +43,52 @@ struct PaywallView: View {
                     .background(Color.white)
                     .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
 
-                    Button("解锁 Pro") {
-                        dismiss()
+                    Button {
+                        if purchaseManager.isPro {
+                            dismiss()
+                        } else {
+                            Task {
+                                await purchaseManager.purchasePro()
+                            }
+                        }
+                    } label: {
+                        if purchaseManager.isPurchasing {
+                            ProgressView()
+                                .tint(.white)
+                        } else {
+                            Text(purchaseManager.isPro ? "完成" : "解锁 Pro")
+                        }
                     }
                     .buttonStyle(.borderedProminent)
                     .tint(AppTheme.primary)
                     .controlSize(.large)
                     .frame(maxWidth: .infinity)
+                    .disabled(purchaseManager.isPurchasing || purchaseManager.isLoadingProduct)
 
-                    Button("恢复购买") {}
+                    Button("恢复购买") {
+                        Task {
+                            await purchaseManager.restorePurchases()
+                        }
+                    }
                         .font(.footnote.weight(.medium))
                         .foregroundStyle(AppTheme.muted)
+                        .disabled(purchaseManager.isPurchasing)
+
+                    if let message = purchaseManager.message {
+                        Text(message)
+                            .font(.footnote)
+                            .foregroundStyle(AppTheme.muted)
+                            .multilineTextAlignment(.center)
+                    }
                 }
             }
             .padding(20)
             .background(AppTheme.background)
             .navigationTitle("Pro")
             .navigationBarTitleDisplayMode(.inline)
+            .task {
+                await purchaseManager.start()
+            }
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
                     Button("关闭") {

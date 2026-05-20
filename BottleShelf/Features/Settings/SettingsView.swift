@@ -2,6 +2,7 @@ import SwiftData
 import SwiftUI
 
 struct SettingsView: View {
+    @EnvironmentObject private var purchaseManager: PurchaseManager
     @Query private var products: [BeautyProduct]
     @State private var showingPaywall = false
 
@@ -19,7 +20,7 @@ struct SettingsView: View {
                         Text("化妆品保质期与库存提醒")
                             .font(.subheadline)
                             .foregroundStyle(AppTheme.muted)
-                        Text("当前已记录 \(activeCount) / \(ProductLimit.freeLimit) 件免费额度")
+                        Text(membershipSummary)
                             .font(.caption)
                             .foregroundStyle(AppTheme.primary)
                     }
@@ -30,10 +31,16 @@ struct SettingsView: View {
                     Button {
                         showingPaywall = true
                     } label: {
-                        Label("解锁 Pro", systemImage: "sparkles")
+                        Label(purchaseManager.isPro ? "查看 Pro" : "解锁 Pro", systemImage: "sparkles")
                     }
-                    Label("恢复购买", systemImage: "arrow.clockwise")
-                        .foregroundStyle(AppTheme.muted)
+                    Button {
+                        Task {
+                            await purchaseManager.restorePurchases()
+                        }
+                    } label: {
+                        Label("恢复购买", systemImage: "arrow.clockwise")
+                    }
+                    .disabled(purchaseManager.isPurchasing)
                 }
 
                 Section("设置") {
@@ -59,6 +66,13 @@ struct SettingsView: View {
                 PaywallView()
             }
         }
+    }
+
+    private var membershipSummary: String {
+        if purchaseManager.isPro {
+            return "Pro 已解锁，可记录无限产品"
+        }
+        return "当前已记录 \(activeCount) / \(ProductLimit.freeLimit) 件免费额度"
     }
 }
 

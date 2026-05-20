@@ -2,7 +2,7 @@ import SwiftData
 import SwiftUI
 
 struct TodayView: View {
-    @Environment(\.modelContext) private var modelContext
+    @EnvironmentObject private var purchaseManager: PurchaseManager
     @Query private var products: [BeautyProduct]
     @State private var showingEditor = false
     @State private var showingPaywall = false
@@ -63,7 +63,6 @@ struct TodayView: View {
                 Text("开启后，App 会根据你填写的日期，在到期前 30 天、7 天和当天提醒你。")
             }
             .onAppear {
-                ProductSeed.insertDemoProductsIfNeeded(in: modelContext, currentCount: products.count)
                 Task {
                     await refreshReminderOffer()
                 }
@@ -212,7 +211,7 @@ struct TodayView: View {
     }
 
     private func startAddFlow() {
-        if ProductLimit.canAddProduct(to: products) {
+        if ProductLimit.canAddProduct(to: products, isPro: purchaseManager.isPro) {
             showingEditor = true
         } else {
             showingPaywall = true

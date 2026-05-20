@@ -2,6 +2,7 @@ import SwiftData
 import SwiftUI
 
 struct InventoryView: View {
+    @EnvironmentObject private var purchaseManager: PurchaseManager
     @Query private var products: [BeautyProduct]
     @State private var showingEditor = false
     @State private var showingPaywall = false
@@ -142,7 +143,7 @@ struct InventoryView: View {
     }
 
     private func startAddFlow() {
-        if ProductLimit.canAddProduct(to: products) {
+        if ProductLimit.canAddProduct(to: products, isPro: purchaseManager.isPro) {
             showingEditor = true
         } else {
             showingPaywall = true

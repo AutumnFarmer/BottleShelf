@@ -25,6 +25,7 @@
 		858F8698A763EFA75C52DF03 /* ProductLimitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ECFCB984798BDD214E96D2C /* ProductLimitTests.swift */; };
 		85ACE0915AC76AD1C3A97ED4 /* AppTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D63679B5B7A1DBC91479D4D /* AppTheme.swift */; };
 		86FC2BB01B20B77C0DCAB94C /* EmptyStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F0436CE1C35F3288EB9D55 /* EmptyStateView.swift */; };
+		88CDDCF7D0676D8BFDF4871A /* PurchaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A984F7FC5201FAC9D341E9BB /* PurchaseManager.swift */; };
 		914648DF442026604B611797 /* ExpiryCalculatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48CBEFF490987FAC0E36199F /* ExpiryCalculatorTests.swift */; };
 		983B97B41AA9751AEF365160 /* ProductDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1663E5070F876DB289404655 /* ProductDetailView.swift */; };
 		9B0AE329DEEF3CE0AB202783 /* NotificationScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30D26DCE20AF041B30AF64D6 /* NotificationScheduler.swift */; };
@@ -34,6 +35,7 @@
 		C71B93692D7DC99FB1A33739 /* StatusTag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C76F16BE4EB1CE58B7C3AD9 /* StatusTag.swift */; };
 		CDA75414B26245324F5276E6 /* BeautyProduct.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4EFB61545E332B98D0FCCD7 /* BeautyProduct.swift */; };
 		DD2B698FD4205299E174B49E /* AppRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 486B73677A0946EDF7496E52 /* AppRootView.swift */; };
+		E972C5965B0E0E4B8132BDFD /* PurchaseManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58ABE8AB527779F5A96443BC /* PurchaseManagerTests.swift */; };
 		F497D6BC42EA62C92543D9D8 /* ImageStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7222DEA66591FFE3815C4034 /* ImageStore.swift */; };
 		F501855803B6EBA9F51CE3A4 /* ProductStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98182580161969174CD8ADCE /* ProductStatus.swift */; };
 		F89D0C8E6114809485F8C725 /* NotificationSchedulerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9349DADFB19AB42EE64329F /* NotificationSchedulerTests.swift */; };
@@ -64,6 +66,7 @@
 		48CBEFF490987FAC0E36199F /* ExpiryCalculatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpiryCalculatorTests.swift; sourceTree = "<group>"; };
 		4B2674CAA0018C22B20C9D1D /* ExpiryCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpiryCalculator.swift; sourceTree = "<group>"; };
 		4C6A749DF17A686A99D05DDF /* ProductLimit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductLimit.swift; sourceTree = "<group>"; };
+		58ABE8AB527779F5A96443BC /* PurchaseManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchaseManagerTests.swift; sourceTree = "<group>"; };
 		5D63679B5B7A1DBC91479D4D /* AppTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTheme.swift; sourceTree = "<group>"; };
 		60F52950201790F0FD588983 /* ProductCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductCategory.swift; sourceTree = "<group>"; };
 		6F2468A08B1962507A4E646D /* InventoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InventoryView.swift; sourceTree = "<group>"; };
@@ -73,6 +76,7 @@
 		7E721DF2754DE11E81B67C24 /* ProductThumbnail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductThumbnail.swift; sourceTree = "<group>"; };
 		90E7B424208C67B955C7322B /* BottleShelfTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = BottleShelfTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		98182580161969174CD8ADCE /* ProductStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductStatus.swift; sourceTree = "<group>"; };
+		A984F7FC5201FAC9D341E9BB /* PurchaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchaseManager.swift; sourceTree = "<group>"; };
 		AB7104789DC8749F7EE55A4F /* RepurchaseIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepurchaseIntent.swift; sourceTree = "<group>"; };
 		AE742E50C374DB750E072F60 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		C4EFB61545E332B98D0FCCD7 /* BeautyProduct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeautyProduct.swift; sourceTree = "<group>"; };
@@ -115,6 +119,7 @@
 				48CBEFF490987FAC0E36199F /* ExpiryCalculatorTests.swift */,
 				F9349DADFB19AB42EE64329F /* NotificationSchedulerTests.swift */,
 				0ECFCB984798BDD214E96D2C /* ProductLimitTests.swift */,
+				58ABE8AB527779F5A96443BC /* PurchaseManagerTests.swift */,
 			);
 			path = BottleShelfTests;
 			sourceTree = "<group>";
@@ -242,6 +247,7 @@
 				30D26DCE20AF041B30AF64D6 /* NotificationScheduler.swift */,
 				4C6A749DF17A686A99D05DDF /* ProductLimit.swift */,
 				1400D1B33A1C1EA34D86EAC0 /* ProductSeed.swift */,
+				A984F7FC5201FAC9D341E9BB /* PurchaseManager.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -344,6 +350,7 @@
 				914648DF442026604B611797 /* ExpiryCalculatorTests.swift in Sources */,
 				F89D0C8E6114809485F8C725 /* NotificationSchedulerTests.swift in Sources */,
 				858F8698A763EFA75C52DF03 /* ProductLimitTests.swift in Sources */,
+				E972C5965B0E0E4B8132BDFD /* PurchaseManagerTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -372,6 +379,7 @@
 				327757FA67079EBD715BBF6F /* ProductSeed.swift in Sources */,
 				F501855803B6EBA9F51CE3A4 /* ProductStatus.swift in Sources */,
 				146EF1D17B8B27FA204F701B /* ProductThumbnail.swift in Sources */,
+				88CDDCF7D0676D8BFDF4871A /* PurchaseManager.swift in Sources */,
 				4B9CF2A245A028CDB4AB1551 /* RepurchaseIntent.swift in Sources */,
 				C344C1D49D2D6D791CA50FF0 /* SettingsView.swift in Sources */,
 				C71B93692D7DC99FB1A33739 /* StatusTag.swift in Sources */,

@@ -186,3 +186,77 @@ xcrun simctl io 6B6A8952-9B2E-4A75-BCF4-6DFF92823BED screenshot /Users/zmc/Docum
 3. 将 Pro 状态接入 `ProductLimit`，购买后解除 10 件限制。
 4. 做沙盒购买验证。
 5. 优化 Paywall 文案与价格展示。
+
+## 2026-05-20 M3 付费闭环基础版
+
+### 已实现
+
+- 正式 App 启动路径不再自动插入 demo 产品，避免新用户首次打开看到假数据。
+- 新增 `PurchaseManager`：
+  - 使用 StoreKit 2 加载非消耗型 IAP 商品。
+  - 商品 ID 固定为 `com.zmc.bottleshelf.pro.lifetime`。
+  - 购买成功后读取当前权益。
+  - 启动时读取 `Transaction.currentEntitlements`。
+  - 监听 `Transaction.updates`，处理后续交易变化。
+  - 实现恢复购买。
+- `BottleShelfApp` 注入全局 `PurchaseManager`，Today、库存、我的、Paywall 共用同一份 Pro 状态。
+- Paywall 从 StoreKit 商品读取展示价格，加载不到商品时保留 `¥28` 兜底展示。
+- Paywall 主卖点收窄为当前版本已实现权益：
+  - 无限产品
+  - 本地到期提醒
+  - 本地优先保存
+- 今天页和库存页的免费 10 件限制已接入真实 Pro 状态，Pro 解锁后不再限制新增。
+- 我的页恢复购买按钮已接入真实 StoreKit 恢复流程。
+- `ProductLimit` 统计免费额度时排除已空瓶和已丢弃产品。
+- 新增测试：
+  - 已空瓶产品不占用免费额度。
+  - Pro 商品 ID 保持稳定。
+
+### 验证命令
+
+生成工程：
+
+```sh
+xcodegen generate
+```
+
+测试：
+
+```sh
+xcodebuild -project BottleShelf.xcodeproj -scheme BottleShelf -destination 'platform=iOS Simulator,name=iPhone 17,OS=26.2' CODE_SIGNING_ALLOWED=NO test
+```
+
+安装并启动模拟器：
+
+```sh
+xcrun simctl boot 6B6A8952-9B2E-4A75-BCF4-6DFF92823BED
+xcrun simctl bootstatus 6B6A8952-9B2E-4A75-BCF4-6DFF92823BED -b
+xcrun simctl install 6B6A8952-9B2E-4A75-BCF4-6DFF92823BED /Users/zmc/Library/Developer/Xcode/DerivedData/BottleShelf-asyysmlnqnhqljftfzhbmdedpxts/Build/Products/Debug-iphonesimulator/BottleShelf.app
+xcrun simctl launch 6B6A8952-9B2E-4A75-BCF4-6DFF92823BED com.zmc.bottleshelf
+```
+
+截图：
+
+```sh
+xcrun simctl io 6B6A8952-9B2E-4A75-BCF4-6DFF92823BED screenshot /Users/zmc/Documents/Codex/2026-05-19/app/BottleShelf-simulator-m3.png
+```
+
+### 验证结果
+
+- `xcodebuild test`：通过，12 个测试全部成功
+- StoreKit 2 编译链路：通过
+- Pro 状态接入免费限制：通过单元测试覆盖
+- 商品加载、购买、恢复购买：代码已接入，仍需 App Store Connect 或 StoreKit 本地配置后做沙盒验证
+
+### 当前限制
+
+- 还没有在 App Store Connect 创建真实 IAP 商品，商品 ID 需与 `com.zmc.bottleshelf.pro.lifetime` 一致。
+- 还没有完成 StoreKit 沙盒购买、取消、恢复、重装恢复验证。
+- 本地通知仍需真机到点触发验证。
+- App 图标、隐私政策、App Store 截图和审核备注未制作。
+
+### 下一步
+
+1. 在 App Store Connect 创建非消耗型 IAP：`com.zmc.bottleshelf.pro.lifetime`。
+2. 使用沙盒账号验证购买、取消、恢复购买和重装恢复。
+3. 进入 M4，优先优化添加流程、Today 首屏和小屏适配。

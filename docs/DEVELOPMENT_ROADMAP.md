@@ -87,14 +87,16 @@
 
 目标：跑通盈利闭环。
 
+状态：基础代码已完成，待 App Store Connect IAP 或 StoreKit 本地配置后做沙盒验收。
+
 任务：
 
-- 创建 StoreKit 配置文件。
-- 实现 Pro Paywall。
-- 将 Pro 状态接入免费 10 件限制。
-- 实现 StoreKit 2 购买。
-- 实现恢复购买。
-- 接入沙盒测试。
+- 待完成：创建 StoreKit 配置文件或 App Store Connect IAP 商品。
+- 已完成：实现 Pro Paywall。
+- 已完成：将 Pro 状态接入免费 10 件限制。
+- 已完成：实现 StoreKit 2 购买。
+- 已完成：实现恢复购买。
+- 待完成：接入沙盒测试。
 
 完成标准：
 
@@ -213,10 +215,13 @@
 
 ## 6. 下一步建议
 
-下一步进入 M1：
+当前 M1/M2 已完成本地 MVP、图片和提醒基础能力。M3 付费闭环基础代码已完成，下一步做真实 IAP 验收：
 
-1. 创建 SwiftUI 项目。
-2. 先做无 StoreKit 的本地 MVP。
-3. 真机验证“新增产品 -> 计算到期 -> 今天页展示”闭环。
+1. 在 App Store Connect 创建非消耗型 IAP：`com.zmc.bottleshelf.pro.lifetime`。
+2. 沙盒验证购买、取消、恢复购买、重装恢复。
+3. 补 StoreKit 相关边界测试。
+4. 进入 M4 优化添加流程、Today 首屏、通知真机验证和小屏适配。
 
-只有这个闭环跑通后，再接通知和付费。
+沙盒验收通过后，M3 才算完整关闭。
+
+详细优化讨论见：`docs/OPTIMIZATION_DISCUSSION.md`。

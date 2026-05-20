@@ -27,6 +27,13 @@ final class ProductLimitTests: XCTestCase {
         XCTAssertTrue(ProductLimit.canAddProduct(to: products))
     }
 
+    func testEmptiedProductsDoNotCountTowardFreeLimit() {
+        var products = makeProducts(count: ProductLimit.freeLimit)
+        products[0].statusOverride = .emptied
+
+        XCTAssertTrue(ProductLimit.canAddProduct(to: products))
+    }
+
     private func makeProducts(count: Int) -> [BeautyProduct] {
         (0..<count).map { index in
             BeautyProduct(name: "产品\(index)", category: .serum)
