@@ -237,3 +237,4 @@ M3/M4 建议补测试：
 - Apple In-App Purchase 文档：购买、交付、恢复购买都需要完整实现。
 - Apple App Store Connect App Privacy：iOS App 需要隐私政策 URL，并需要声明数据处理实践。
 - Apple App Store 提交流程：新 App 和更新需要提交隐私实践信息。
+- M4 UI 复盘会纪要：`docs/M4_UI_REVIEW_MEETING.md`。
