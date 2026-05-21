@@ -391,9 +391,21 @@ xcrun simctl io 6B6A8952-9B2E-4A75-BCF4-6DFF92823BED screenshot /Users/zmc/Docum
   - 上传数量：`5/10 张截屏`
   - 尺寸：`1284x2778`
   - 素材目录：`/Users/zmc/Downloads/BottleShelf-AppStore-Assets`
+- App 图标已补齐到工程：
+  - 资源路径：`BottleShelf/Assets.xcassets/AppIcon.appiconset`
+  - 1024 图标与各 iPhone 图标均已去除 alpha 通道。
+  - `Assets.xcassets` 已加入 Xcode Resources 阶段。
+- TestFlight 构建已上传：
+  - 归档路径：`/tmp/BottleShelf-1.0.xcarchive`
+  - 导出包：`/tmp/BottleShelfExport/BottleShelf.ipa`
+  - Xcode 上传结果：`Upload succeeded`，App Store Connect 已进入 processing。
+- 上架文案与支持文档已补齐：
+  - 元数据草稿：`docs/APP_STORE_METADATA.md`
+  - 隐私政策：`docs/PRIVACY_POLICY.md`
+  - 支持页：`docs/SUPPORT.md`
 
 ### 仍待完成
 
-1. 上传第一个 TestFlight 构建。
+1. 等待 App Store Connect 处理完已上传构建，并在 `1.0` 版本页选择该构建。
 2. 将首个 IAP 关联到 `1.0` 版本后随 App 一起提交审核。
-3. 完成 App 隐私、年龄分级、描述、关键词、支持 URL、审核备注等上架元数据。
+3. 在 App Store Connect 填写描述、关键词、支持 URL、审核备注、App 隐私和年龄分级。
