@@ -1,6 +1,10 @@
 import SwiftUI
 
 struct AppRootView: View {
+#if DEBUG
+    @State private var showingReviewPaywall = ProcessInfo.processInfo.arguments.contains("-showPaywallOnLaunch")
+#endif
+
     var body: some View {
         TabView {
             TodayView()
@@ -24,5 +28,10 @@ struct AppRootView: View {
                 }
         }
         .tint(AppTheme.primary)
+#if DEBUG
+        .sheet(isPresented: $showingReviewPaywall) {
+            PaywallView()
+        }
+#endif
     }
 }

@@ -12,7 +12,7 @@ struct PaywallView: View {
                     featureList
                     purchaseSummaryCard
 
-                    if let message = purchaseManager.message {
+                    if !isReviewScreenshotMode, let message = purchaseManager.message {
                         Text(message)
                             .font(.footnote)
                             .foregroundStyle(AppTheme.muted)
@@ -33,7 +33,9 @@ struct PaywallView: View {
                 purchaseFooter
             }
             .task {
-                await purchaseManager.start()
+                if !isReviewScreenshotMode {
+                    await purchaseManager.start()
+                }
             }
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
@@ -46,10 +48,21 @@ struct PaywallView: View {
     }
 
     private var canPurchase: Bool {
-        purchaseManager.isPro
+        if isReviewScreenshotMode {
+            return true
+        }
+        return purchaseManager.isPro
             || (purchaseManager.proProduct != nil
                 && !purchaseManager.isLoadingProduct
                 && !purchaseManager.isPurchasing)
+    }
+
+    private var isReviewScreenshotMode: Bool {
+#if DEBUG
+        ProcessInfo.processInfo.arguments.contains("-reviewPaywallScreenshot")
+#else
+        false
+#endif
     }
 
     private var headerCard: some View {
@@ -158,6 +171,9 @@ struct PaywallView: View {
         if purchaseManager.isPro {
             return "完成"
         }
+        if isReviewScreenshotMode {
+            return "解锁 Pro"
+        }
         if purchaseManager.isLoadingProduct {
             return "正在读取价格"
         }
@@ -171,6 +187,9 @@ struct PaywallView: View {
         if purchaseManager.isPro {
             return "已解锁"
         }
+        if isReviewScreenshotMode {
+            return "¥28.00"
+        }
         if purchaseManager.isLoadingProduct {
             return "读取中"
         }
@@ -181,6 +200,9 @@ struct PaywallView: View {
         if purchaseManager.isPro {
             return "恢复购买会重新同步你的 App Store 权益。"
         }
+        if isReviewScreenshotMode {
+            return "价格来自 App Store，购买由 Apple 处理。"
+        }
         if purchaseManager.proProduct != nil {
             return "价格来自 App Store，购买由 Apple 处理。"
         }
@@ -188,11 +210,14 @@ struct PaywallView: View {
     }
 
     private var priceColor: Color {
-        purchaseManager.proProduct == nil && !purchaseManager.isPro ? AppTheme.muted : AppTheme.primary
+        purchaseManager.proProduct == nil && !purchaseManager.isPro && !isReviewScreenshotMode ? AppTheme.muted : AppTheme.primary
     }
 
     private var shouldShowReloadButton: Bool {
-        !purchaseManager.isPro
+        if isReviewScreenshotMode {
+            return false
+        }
+        return !purchaseManager.isPro
             && purchaseManager.proProduct == nil
             && !purchaseManager.isLoadingProduct
     }
