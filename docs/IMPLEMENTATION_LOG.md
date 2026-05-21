@@ -380,11 +380,11 @@ xcrun simctl io 6B6A8952-9B2E-4A75-BCF4-6DFF92823BED screenshot /Users/zmc/Docum
 - IAP 审核截图已生成：
   - 使用 DEBUG-only 启动参数 `-showPaywallOnLaunch -reviewPaywallScreenshot` 直接打开 Pro 购买页。
   - 截图内容已包含 Pro 权益、`¥28.00` 价格和 Apple 购买处理说明。
-  - 上传到 App Store Connect 时被本机 Chrome 扩展文件权限拦截；需在 Chrome 扩展详情页开启文件访问权限后重试上传。
+- IAP 审核截图已上传到 App Store Connect。
+  - IAP 状态已从“元数据丢失”变为“准备提交”。
 
 ### 仍待完成
 
-1. 上传 IAP 审核截图，当前 IAP 仍显示“元数据丢失”。
-2. 上传第一个 TestFlight 构建。
-3. 将首个 IAP 关联到 `1.0` 版本后随 App 一起提交审核。
-4. 完成 App 隐私、年龄分级、截图、描述、审核备注等上架元数据。
+1. 上传第一个 TestFlight 构建。
+2. 将首个 IAP 关联到 `1.0` 版本后随 App 一起提交审核。
+3. 完成 App 隐私、年龄分级、截图、描述、审核备注等上架元数据。
