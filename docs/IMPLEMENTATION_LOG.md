@@ -382,9 +382,18 @@ xcrun simctl io 6B6A8952-9B2E-4A75-BCF4-6DFF92823BED screenshot /Users/zmc/Docum
   - 截图内容已包含 Pro 权益、`¥28.00` 价格和 Apple 购买处理说明。
 - IAP 审核截图已上传到 App Store Connect。
   - IAP 状态已从“元数据丢失”变为“准备提交”。
+- IAP 图像（可选）已上传：
+  - 素材：`/Users/zmc/Downloads/BottleShelf-AppStore-Assets/BottleShelf-iap-promo-1024.png`
+  - 尺寸：`1024x1024`
+  - 上传后页面出现“App Store 推广”配置区。
+- App 产品页截屏已上传：
+  - 上传位置：`iPhone 6.5 英寸显示屏`
+  - 上传数量：`5/10 张截屏`
+  - 尺寸：`1284x2778`
+  - 素材目录：`/Users/zmc/Downloads/BottleShelf-AppStore-Assets`
 
 ### 仍待完成
 
 1. 上传第一个 TestFlight 构建。
 2. 将首个 IAP 关联到 `1.0` 版本后随 App 一起提交审核。
-3. 完成 App 隐私、年龄分级、截图、描述、审核备注等上架元数据。
+3. 完成 App 隐私、年龄分级、描述、关键词、支持 URL、审核备注等上架元数据。
