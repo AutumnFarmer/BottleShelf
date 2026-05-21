@@ -11,8 +11,8 @@ final class PurchaseManager: ObservableObject {
     @Published private(set) var isPurchasing = false
     @Published var message: String?
 
-    var displayPrice: String {
-        proProduct?.displayPrice ?? "¥28"
+    var displayPrice: String? {
+        proProduct?.displayPrice
     }
 
     private var updatesTask: Task<Void, Never>?

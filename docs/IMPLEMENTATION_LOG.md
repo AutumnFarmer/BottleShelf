@@ -200,7 +200,7 @@ xcrun simctl io 6B6A8952-9B2E-4A75-BCF4-6DFF92823BED screenshot /Users/zmc/Docum
   - 监听 `Transaction.updates`，处理后续交易变化。
   - 实现恢复购买。
 - `BottleShelfApp` 注入全局 `PurchaseManager`，Today、库存、我的、Paywall 共用同一份 Pro 状态。
-- Paywall 从 StoreKit 商品读取展示价格，加载不到商品时保留 `¥28` 兜底展示。
+- Paywall 从 StoreKit 商品读取展示价格。
 - Paywall 主卖点收窄为当前版本已实现权益：
   - 无限产品
   - 本地到期提醒
@@ -330,3 +330,26 @@ xcrun simctl io 6B6A8952-9B2E-4A75-BCF4-6DFF92823BED screenshot /Users/zmc/Docum
 1. 用 UI 测试或手动真机验证连续录入 3 件的实际耗时。
 2. 做 Today 推荐产品卡，压缩 0 值统计。
 3. 做详情页危险操作降权和“7 天后再提醒我”。
+
+## 2026-05-21 上线冲刺：Paywall 风险关闭
+
+### 已实现
+
+- Paywall 改为 `ScrollView + 底部固定购买区`，小屏和大字号下购买区更稳定。
+- 商品价格只来自 StoreKit，不再使用固定 `¥28` 兜底展示。
+- StoreKit 商品未加载到时：
+  - 价格显示为“暂不可用”。
+  - 主按钮显示“商品暂不可用”并禁用。
+  - 提供“重新加载商品”入口。
+- 保留恢复购买入口，仍可同步已有 App Store 权益。
+- 新增测试：StoreKit 商品未加载前 `displayPrice` 为 `nil`。
+
+### 验证结果
+
+- `xcodebuild test`：通过，13 个测试全部成功
+
+### 下一步
+
+1. 创建本地 StoreKit 配置或 App Store Connect IAP 商品。
+2. 做 StoreKit 沙盒购买、取消、恢复购买、重装恢复验证。
+3. 继续关闭详情页“延后 7 天提醒”修改真实建议期的问题。
