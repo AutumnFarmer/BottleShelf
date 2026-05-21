@@ -403,9 +403,21 @@ xcrun simctl io 6B6A8952-9B2E-4A75-BCF4-6DFF92823BED screenshot /Users/zmc/Docum
   - 元数据草稿：`docs/APP_STORE_METADATA.md`
   - 隐私政策：`docs/PRIVACY_POLICY.md`
   - 支持页：`docs/SUPPORT.md`
+- App Store Connect 版本页已完成：
+  - 已选择构建版本：`1.0 (1)`。
+  - 已完成出口合规答复：不属于需提供出口合规证明的加密算法使用场景。
+  - 已将首个 IAP 关联到 `1.0` 版本：`BottleShelf Pro Lifetime`。
+  - 已填写推广文本、描述、关键词、技术支持 URL、版权和审核备注。
+  - App 隐私已发布：未收集数据。
+  - App 信息已保存：主类别为“生活”，内容版权为“不包含、显示或访问第三方内容”，年龄分级为 `4+`。
+  - App 本体价格已设置为免费，当前价格覆盖 `175` 个国家或地区。
+- `1.0` 版本已正式提交审核：
+  - App 版本状态：`正在等待审核`。
+  - 首个 IAP 状态：`正在等待审核`。
+  - App Store Connect 提示审核最多可能需要 `48` 小时。
 
 ### 仍待完成
 
-1. 等待 App Store Connect 处理完已上传构建，并在 `1.0` 版本页选择该构建。
-2. 将首个 IAP 关联到 `1.0` 版本后随 App 一起提交审核。
-3. 在 App Store Connect 填写描述、关键词、支持 URL、审核备注、App 隐私和年龄分级。
+1. 等待 App Review 审核结果。
+2. 如果被拒，按 Review Notes 修复后重新提交。
+3. 审核通过后确认 App Store 页面、IAP 购买和恢复购买链路。
