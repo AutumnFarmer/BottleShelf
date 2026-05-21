@@ -3,7 +3,7 @@ import StoreKit
 
 @MainActor
 final class PurchaseManager: ObservableObject {
-    nonisolated static let proProductID = "com.zmc.bottleshelf.pro.lifetime"
+    nonisolated static let proProductID = "com.autumnfarmer.bottleshelf.pro.lifetime"
 
     @Published private(set) var proProduct: Product?
     @Published private(set) var isPro = false

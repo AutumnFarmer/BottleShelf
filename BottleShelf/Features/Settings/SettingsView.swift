@@ -113,7 +113,7 @@ private struct AboutView: View {
         List {
             Section {
                 Text("瓶瓶罐罐")
-                Text("版本 0.1.0")
+                Text("版本 1.0")
                 Text("一个帮你管理护肤品、彩妆、小样和香水保质期的私人梳妆台工具。")
             }
         }

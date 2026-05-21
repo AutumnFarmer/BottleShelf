@@ -63,7 +63,7 @@ xcodebuild -project BottleShelf.xcodeproj -scheme BottleShelf -destination 'plat
 xcrun simctl boot 6B6A8952-9B2E-4A75-BCF4-6DFF92823BED
 xcrun simctl bootstatus 6B6A8952-9B2E-4A75-BCF4-6DFF92823BED -b
 xcrun simctl install 6B6A8952-9B2E-4A75-BCF4-6DFF92823BED /Users/zmc/Library/Developer/Xcode/DerivedData/BottleShelf-asyysmlnqnhqljftfzhbmdedpxts/Build/Products/Debug-iphonesimulator/BottleShelf.app
-xcrun simctl launch 6B6A8952-9B2E-4A75-BCF4-6DFF92823BED com.zmc.bottleshelf
+xcrun simctl launch 6B6A8952-9B2E-4A75-BCF4-6DFF92823BED com.autumnfarmer.bottleshelf
 ```
 
 截图：
@@ -152,7 +152,7 @@ xcodebuild -project BottleShelf.xcodeproj -scheme BottleShelf -destination 'plat
 xcrun simctl boot 6B6A8952-9B2E-4A75-BCF4-6DFF92823BED
 xcrun simctl bootstatus 6B6A8952-9B2E-4A75-BCF4-6DFF92823BED -b
 xcrun simctl install 6B6A8952-9B2E-4A75-BCF4-6DFF92823BED /Users/zmc/Library/Developer/Xcode/DerivedData/BottleShelf-asyysmlnqnhqljftfzhbmdedpxts/Build/Products/Debug-iphonesimulator/BottleShelf.app
-xcrun simctl launch 6B6A8952-9B2E-4A75-BCF4-6DFF92823BED com.zmc.bottleshelf
+xcrun simctl launch 6B6A8952-9B2E-4A75-BCF4-6DFF92823BED com.autumnfarmer.bottleshelf
 ```
 
 截图：
@@ -194,7 +194,7 @@ xcrun simctl io 6B6A8952-9B2E-4A75-BCF4-6DFF92823BED screenshot /Users/zmc/Docum
 - 正式 App 启动路径不再自动插入 demo 产品，避免新用户首次打开看到假数据。
 - 新增 `PurchaseManager`：
   - 使用 StoreKit 2 加载非消耗型 IAP 商品。
-  - 商品 ID 固定为 `com.zmc.bottleshelf.pro.lifetime`。
+  - 商品 ID 固定为 `com.autumnfarmer.bottleshelf.pro.lifetime`。
   - 购买成功后读取当前权益。
   - 启动时读取 `Transaction.currentEntitlements`。
   - 监听 `Transaction.updates`，处理后续交易变化。
@@ -232,7 +232,7 @@ xcodebuild -project BottleShelf.xcodeproj -scheme BottleShelf -destination 'plat
 xcrun simctl boot 6B6A8952-9B2E-4A75-BCF4-6DFF92823BED
 xcrun simctl bootstatus 6B6A8952-9B2E-4A75-BCF4-6DFF92823BED -b
 xcrun simctl install 6B6A8952-9B2E-4A75-BCF4-6DFF92823BED /Users/zmc/Library/Developer/Xcode/DerivedData/BottleShelf-asyysmlnqnhqljftfzhbmdedpxts/Build/Products/Debug-iphonesimulator/BottleShelf.app
-xcrun simctl launch 6B6A8952-9B2E-4A75-BCF4-6DFF92823BED com.zmc.bottleshelf
+xcrun simctl launch 6B6A8952-9B2E-4A75-BCF4-6DFF92823BED com.autumnfarmer.bottleshelf
 ```
 
 截图：
@@ -250,14 +250,14 @@ xcrun simctl io 6B6A8952-9B2E-4A75-BCF4-6DFF92823BED screenshot /Users/zmc/Docum
 
 ### 当前限制
 
-- 还没有在 App Store Connect 创建真实 IAP 商品，商品 ID 需与 `com.zmc.bottleshelf.pro.lifetime` 一致。
+- 还没有在 App Store Connect 创建真实 IAP 商品，商品 ID 需与 `com.autumnfarmer.bottleshelf.pro.lifetime` 一致。
 - 还没有完成 StoreKit 沙盒购买、取消、恢复、重装恢复验证。
 - 本地通知仍需真机到点触发验证。
 - App 图标、隐私政策、App Store 截图和审核备注未制作。
 
 ### 下一步
 
-1. 在 App Store Connect 创建非消耗型 IAP：`com.zmc.bottleshelf.pro.lifetime`。
+1. 在 App Store Connect 创建非消耗型 IAP：`com.autumnfarmer.bottleshelf.pro.lifetime`。
 2. 使用沙盒账号验证购买、取消、恢复购买和重装恢复。
 3. 进入 M4，优先优化添加流程、Today 首屏和小屏适配。
 
@@ -353,3 +353,34 @@ xcrun simctl io 6B6A8952-9B2E-4A75-BCF4-6DFF92823BED screenshot /Users/zmc/Docum
 1. 创建本地 StoreKit 配置或 App Store Connect IAP 商品。
 2. 做 StoreKit 沙盒购买、取消、恢复购买、重装恢复验证。
 3. 继续关闭详情页“延后 7 天提醒”修改真实建议期的问题。
+
+## 2026-05-21 App Store Connect 配置
+
+### 已完成
+
+- Apple Developer Team：`Farmers Autumn` / Team ID `X3ZQB66K6X`。
+- App Store Connect App 已创建：
+  - App 名称：`BottleShelf`
+  - Apple ID：`6771651166`
+  - SKU：`bottleshelf-ios`
+  - Bundle ID：`com.autumnfarmer.bottleshelf`
+- App ID 已注册：`BottleShelf - com.autumnfarmer.bottleshelf`。
+- 非消耗型 IAP 已创建：
+  - 参考名称：`BottleShelf Pro Lifetime`
+  - 产品 ID：`com.autumnfarmer.bottleshelf.pro.lifetime`
+  - Apple ID：`6771651845`
+  - 定价：以中国大陆为基准，`¥28.00`
+  - 销售范围：所有国家或地区
+  - 简体中文本地化：`BottleShelf Pro`
+- 本地工程已同步：
+  - App Bundle ID 改为 `com.autumnfarmer.bottleshelf`。
+  - Test Bundle ID 改为 `com.autumnfarmer.bottleshelf.tests`。
+  - StoreKit 商品 ID 改为 `com.autumnfarmer.bottleshelf.pro.lifetime`。
+  - `MARKETING_VERSION` 改为 `1.0`，与 App Store Connect 首版一致。
+
+### 仍待完成
+
+1. 生成并上传 IAP 审核截图，当前 IAP 仍显示“元数据丢失”。
+2. 上传第一个 TestFlight 构建。
+3. 将首个 IAP 关联到 `1.0` 版本后随 App 一起提交审核。
+4. 完成 App 隐私、年龄分级、截图、描述、审核备注等上架元数据。

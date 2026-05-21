@@ -219,9 +219,9 @@
 
 ## 6. 下一步建议
 
-当前 M1/M2 已完成本地 MVP、图片和提醒基础能力。M3 付费闭环基础代码已完成，下一步做真实 IAP 验收：
+当前 M1/M2 已完成本地 MVP、图片和提醒基础能力。M3 付费闭环基础代码已完成，App Store Connect 的首个 IAP 已创建，下一步做真实 IAP 验收：
 
-1. 在 App Store Connect 创建非消耗型 IAP：`com.zmc.bottleshelf.pro.lifetime`。
+1. 上传 IAP 审核截图，关闭 IAP “元数据丢失”。
 2. 沙盒验证购买、取消、恢复购买、重装恢复。
 3. 补 StoreKit 相关边界测试。
 4. 进入 M4 优化添加流程、Today 首屏、通知真机验证和小屏适配。

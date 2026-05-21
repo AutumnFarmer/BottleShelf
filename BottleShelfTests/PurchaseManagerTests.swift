@@ -3,7 +3,7 @@ import XCTest
 
 final class PurchaseManagerTests: XCTestCase {
     func testProProductIdentifierIsStable() {
-        XCTAssertEqual(PurchaseManager.proProductID, "com.zmc.bottleshelf.pro.lifetime")
+        XCTAssertEqual(PurchaseManager.proProductID, "com.autumnfarmer.bottleshelf.pro.lifetime")
     }
 
     @MainActor
